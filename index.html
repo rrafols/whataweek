@@ -28,7 +28,7 @@
             setInterval(_ => {
                 const d = new Date()
                 let day = d.getDay()
-                
+
                 canvas.width = canvas.width
                 c.drawImage(img, 0, 0, img.naturalWidth / ratio, img.height / ratio)
                 c.fillStyle = '#000'
@@ -37,10 +37,18 @@
                 c.font = fontSize + 'px Polsyh'
                 c.fillText("What a week, huh?", 300 / ratio, 280 / ratio)
 
-                fontSize = (90 / ratio)|0
-                c.font = fontSize + 'px Polsyh'
-                if (!str || str.length < 1) str = DAY_OF_WEEK[day]
-                c.fillText("Captain, it's " + str, 155 / ratio, 516 / ratio)
+                if (!str || str.length < 1) str = "Captain, it's " + DAY_OF_WEEK[day]
+
+                let textSize = 99
+                let textWidth = 1000
+                while(textWidth > 800 / ratio) {
+                    textSize /= 1.1
+                    fontSize = (textSize / ratio)|0
+                    c.font = fontSize + 'px Polsyh'
+                    textWidth = c.measureText(str).width
+                }
+
+                c.fillText(str, 155 / ratio, (516 - (90 - textSize) / 2) / ratio)
             })
         }
 
