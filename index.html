@@ -1,0 +1,48 @@
+<head>
+    <style>
+        @font-face {
+            font-family: 'Polsyh';
+            src: url('font/Polsyh.ttf');
+        }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100% }
+    </style>
+    <body>
+        <div style="font-family: Polsyh"></div>
+    </body>
+    <script>
+        let str = window.location.search.substr(1)
+        const DAY_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        const canvas = document.createElement`canvas`
+        document.body.appendChild(canvas)
+        const c = canvas.getContext`2d`
+        const img = new Image()
+        img.src = 'img/whataweek.jpg'
+        img.onload = function() {
+            canvas.width = window.innerWidth
+            canvas.height = window.innerHeight
+            let ratio = img.naturalWidth / canvas.width
+            if (img.naturalHeight / canvas.height > ratio) {
+                ratio = img.naturalHeight / canvas.height
+            }
+            
+            setInterval(_ => {
+                const d = new Date()
+                let day = d.getDay()
+                
+                canvas.width = canvas.width
+                c.drawImage(img, 0, 0, img.naturalWidth / ratio, img.height / ratio)
+                c.fillStyle = '#000'
+
+                let fontSize = (123 / ratio)|0
+                c.font = fontSize + 'px Polsyh'
+                c.fillText("What a week, huh?", 300 / ratio, 280 / ratio)
+
+                fontSize = (90 / ratio)|0
+                c.font = fontSize + 'px Polsyh'
+                if (!str || str.length < 1) str = DAY_OF_WEEK[day]
+                c.fillText("Captain, it's " + str, 155 / ratio, 516 / ratio)
+            })
+        }
+
+    </script>
+</head>
