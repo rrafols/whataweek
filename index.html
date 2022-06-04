@@ -10,7 +10,7 @@
         <div style="font-family: Polsyh"></div>
     </body>
     <script>
-        let str = window.location.search.substr(1)
+        let str = decodeURI(window.location.search.substr(1))
         const DAY_OF_WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         const canvas = document.createElement`canvas`
         document.body.appendChild(canvas)
